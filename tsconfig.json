@@ -1,7 +1,6 @@
 {
   "compilerOptions": {  
-    "target": "es5",                          
-    "strict": true,                           
+    "target": "es6",                                                   
     "esModuleInterop": true,                 
     "skipLibCheck": true,                    
     "forceConsistentCasingInFileNames": true  
