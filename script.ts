@@ -10,7 +10,7 @@
     document.querySelector(query);
 
     function patio() {
-        function ler (){
+        function ler (): Veiculo[] {
             return localStorage.patio ? JSON.parse(localStorage.patio) : [];
         }
 
@@ -18,7 +18,7 @@
             localStorage.setItem('patio', JSON.stringify(veiculos));
         }
 
-        function adicionar(veiculo: Veiculo){
+        function adicionar(veiculo: Veiculo, salva?: boolean){
             const row = document.createElement('tr');
 
             row.innerHTML = `
@@ -32,15 +32,24 @@
 
             $('#patio')?.appendChild(row);
 
-            salvar([...ler(), veiculo]);
+            if(salva) salvar([...ler(), veiculo]);
         }
 
         function remover(){}        
 
-        function render(){}
+        function render(){
+            $('#patio')!.innerHTML = '';
+            const patio = ler();
+
+            if(patio.length) {
+                patio.forEach(veiculo => adicionar(veiculo))
+            }
+        }
 
         return {ler, adicionar, remover, salvar, render};
     }
+
+    patio().render();
 
   $("#cadastrar")?.addEventListener("click", () => {
     const nome = $('#nome')?.value;
@@ -50,6 +59,6 @@
       alert("Os campos nome e placa são obrigatórios");
       return;
     }
-     patio().adicionar({nome, placa, entrada: new Date()});
+     patio().adicionar({nome, placa, entrada: new Date()}, true);
   });
 })();
